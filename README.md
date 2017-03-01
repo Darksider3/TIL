@@ -11,6 +11,7 @@ The strange Date-strings in the filename are from [Tagspaces](https://tagspaces.
 
 .
  * [README.md](./README.md)
+ * [directoryList.md](./directoryList.md)
  * [git](./git)
    * [Git-pre-commit-hook-Tree-Add-to-README[20170301~112440].md](./git/Git-pre-commit-hook-Tree-Add-to-README[20170301~112440].md)
  * [Programming](./Programming)
@@ -25,4 +26,7 @@ The strange Date-strings in the filename are from [Tagspaces](https://tagspaces.
  * [LICENSE.md](./LICENSE.md)
 
 
-### Files: 8, Directorys: 7, both: 15
+### Files: 9, Directorys: 7, both: 16
+
+
+ Full list at [directoryList.md](./directoryList.md)
