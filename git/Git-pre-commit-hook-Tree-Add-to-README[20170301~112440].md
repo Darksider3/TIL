@@ -31,6 +31,6 @@ countFile=$(find . -type f -not -path "*/.git/*" | wc -l)
 countFile=$(($countFile-1))
 countAll=$(($countDirs+$countFile))
 printf "# Project tree\n\n${tree}\n" >> README.md
-printf " ### Files: ${countFile}, Directorys: ${countDirs}, both: ${countAll}\n" >> README.md
+printf "\n\n### Files: ${countFile}, Directorys: ${countDirs}, both: ${countAll}\n" >> README.md
 git add .
 ```
