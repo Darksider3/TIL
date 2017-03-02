@@ -42,3 +42,15 @@ The funny: It accepted the second one, and the last two(4&5). But not 1 and 3.
 Why the hell...?
 
 But i don't want to dig further there... it seems to be pretty messy.
+
+## START has some magic path-arguments!
+
+Just discovered /D`Path`, where `Path` means a directory inside the actual ENV, what on Windows includes the CWD.
+
+You can just do, of course, a cd to come up a directory.
+Or you can use a clean option! I choose the clean one.
+
+```bat
+start "foo" /DC:\bin helloworld.exe
+```
+And it even solves my qoute-problem. :smile:
