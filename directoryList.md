@@ -4,7 +4,6 @@
     |-- README.md
     |-- directoryList.md
     |-- Programming
-    |   |-- .gitkeep
     |   |-- Ruby
     |       |-- RVM default install[20170301~115423 Sysadmin Ruby].md
     |       |-- Ruby iterate over array[20170301~100947 C Ruby].md
