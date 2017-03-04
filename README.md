@@ -13,6 +13,7 @@ The strange Date-strings in the filename are from [Tagspaces](https://tagspaces.
  * [README.md](./README.md)
  * [directoryList.md](./directoryList.md)
  * [Windows](./Windows)
+   * [[20170304~124835 Win_Sysadmin].bat file icons.md](./Windows/[20170304~124835 Win_Sysadmin].bat file icons.md)
    * [batch start is confusing[20170302~221418].md](./Windows/batch start is confusing[20170302~221418].md)
    * [Windows SP1 Fresh Install Update Search forever[Sysadmin].md](./Windows/Windows SP1 Fresh Install Update Search forever[Sysadmin].md)
  * [linux](./linux)
@@ -28,7 +29,7 @@ The strange Date-strings in the filename are from [Tagspaces](https://tagspaces.
  * [LICENSE.md](./LICENSE.md)
 
 
-### Files: 11, Directorys: 7, both: 18
+### Files: 12, Directorys: 7, both: 19
 
 
  Full list at [directoryList.md](./directoryList.md)
