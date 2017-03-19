@@ -5,7 +5,7 @@
     |-- README.md
     |-- directoryList.md
     |-- Programming
-    |   |-- Python 3
+    |   |-- Python3
     |   |   |-- Python_3_Call_a_class_like_a_function.md
     |   |   |-- python_3_require_type_for_variable_argument.md
     |   |-- Ruby
