@@ -18,7 +18,8 @@ class Blub
   }
 };
 ```
-To generate the runner and generate the tests, we have to write first the tests
+To generate the runner and generate the tests, we have to write first the tests.
+
 To setup our env that we need for the tests, we can use setUp(), which runs before EVERY test, and teatDown() which runs after every.
 
 Lets name it testHello.hh
