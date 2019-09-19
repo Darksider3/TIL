@@ -48,4 +48,5 @@ The strange Date-strings in the filename are from [Tagspaces](https://tagspaces.
 
 
 
- Full list at [directoryList.md](./directoryList.md)
+
+created using `go run ./dirList.go -stats -i=./.gitignore -o directoryList.md`

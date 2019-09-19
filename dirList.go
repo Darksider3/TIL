@@ -62,7 +62,7 @@ func main() {
 			}
 			// when dotfiles are excluded
 			if !includeDot {
-				if strings.HasPrefix(path, ".") != true && !Gitignore.Match(path, false) && !Gitignore.Match(path, true){
+				if strings.HasPrefix(path, ".") != true && !Gitignore.Match(path, info.IsDir()) {
 					if Stats {
 						if info.IsDir() {
 							DirCounter++
