@@ -12,16 +12,26 @@ import (
 	"strings"
 )
 
-func MkStr(path string) string {
+func MkStr(path string, name string) string {
 	var MDStr string
-	path=strings.ReplaceAll(path, "_", "\\_")
-	var Depth = strings.Count(path, "/");
-	for i :=0; i != Depth; i++ {
-		MDStr+="  "
+	//path=strings.ReplaceAll(path, "_", "\\_") //Escape links
+	name = strings.ReplaceAll(name, "_", " ") // strip _ off
+	name = strings.TrimSuffix(name, ".md")
+	var Depth = strings.Count(path, "/") // Every / means, we're one subdir higher
+	for i := 0; i != Depth; i++ {
+		MDStr += "  "
 	}
-	MDStr += "  * [" + path + "](" + path + ")\n"
+	MDStr += "  * [" + name + "](" + path + ")\n"
 	return MDStr
 }
+
+func MkStrEscapedStr(path string, name string) string {
+	var MDStr string
+	path = strings.ReplaceAll(path, "_", "\\_") //Escape links
+	MDStr = MkStr(path, name)
+	return MDStr
+}
+
 func main() {
 	var includeDot bool
 	var OutputFile string
@@ -31,11 +41,14 @@ func main() {
 	var DirCounter int
 	var FileCounter int
 	var Stats bool
+	var Escape bool
+
 	FileCounter = 0
 	DirCounter = 0
 	var MDStr string
 	flag.BoolVar(&includeDot, "dot", false, "True: Display display dotfiles. Default is false,")
 	flag.BoolVar(&Stats, "stats", false, "True: Append Stats to output")
+	flag.BoolVar(&Escape, "escape", true, "False: Dont escape pathes with _")
 	flag.StringVar(&OutputFile, "o", "", "Output to given file")
 	flag.StringVar(&AppendFile, "A", "", "Append to given file")
 	flag.StringVar(&Dir, "d", "", "run in specified directory")
@@ -63,34 +76,31 @@ func main() {
 			// when dotfiles are excluded
 			if !includeDot {
 				if strings.HasPrefix(path, ".") != true && !Gitignore.Match(path, info.IsDir()) {
-					if Stats {
-						if info.IsDir() {
-							DirCounter++
-						} else {
-							FileCounter++
-						}
-					}
-					MDStr+=MkStr(path)
-				}
-			} else { // in case when dotfiles are not excluded
-				if Stats {
 					if info.IsDir() {
 						DirCounter++
+						MDStr += MkStrEscapedStr(path, info.Name()+"/")
 					} else {
+						MDStr += MkStrEscapedStr(path, info.Name())
 						FileCounter++
 					}
 				}
-				MDStr+=MkStr(path)
+			} else { // in case when dotfiles are not excluded
+				if info.IsDir() {
+					DirCounter++
+					MDStr += MkStrEscapedStr(path, info.Name()+"/")
+				} else {
+					MDStr += MkStrEscapedStr(path, info.Name())
+					FileCounter++
+				}
 			}
-
 			return nil
 		})
 	if err != nil {
 		log.Println(err)
 	}
 	if Stats {
-		statstr := "Files: "+strconv.Itoa(FileCounter)+", Directories: "+strconv.Itoa(DirCounter)+"\n"
-		MDStr+=statstr
+		statstr := "\n\nFiles: " + strconv.Itoa(FileCounter) + ", Directories: " + strconv.Itoa(DirCounter) + "\n"
+		MDStr += statstr
 	}
 	if OutputFile != "" {
 		err := ioutil.WriteFile(OutputFile, []byte(MDStr), 0644)
