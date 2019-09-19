@@ -3,33 +3,23 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/monochromegane/go-gitignore"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
-	"github.com/monochromegane/go-gitignore"
 )
 
-func MkStr(path string, gitignore gitignore.IgnoreMatcher, dot bool) string {
+func MkStr(path string) string {
 	var MDStr string
-	if !dot  && strings.HasPrefix(path, ".") != true && !gitignore.Match(path, false) && !gitignore.Match(path, true){
-		//[german_deutsch](./german_deutsch)
-		path=strings.ReplaceAll(path, "_", "\\_")
-		var Depth = strings.Count(path, "/");
-		for i :=0; i != Depth; i++ {
-			MDStr+="  "
-		}
-		MDStr += "  * [" + path + "](" + path + ")\n"
-	} else if !gitignore.Match(path, false) && !gitignore.Match(path, true){
-		//[german_deutsch](./german_deutsch)
-		path=strings.ReplaceAll(path, "_", "\\_")
-		var Depth = strings.Count(path, "/");
-		for i :=0; i != Depth; i++ {
-			MDStr+="  "
-		}
-		MDStr += "  * [" + path + "](" + path + ")\n"
+	path=strings.ReplaceAll(path, "_", "\\_")
+	var Depth = strings.Count(path, "/");
+	for i :=0; i != Depth; i++ {
+		MDStr+="  "
 	}
+	MDStr += "  * [" + path + "](" + path + ")\n"
 	return MDStr
 }
 func main() {
@@ -38,9 +28,14 @@ func main() {
 	var AppendFile string
 	var Dir string
 	var IgnoreFile string
-
+	var DirCounter int
+	var FileCounter int
+	var Stats bool
+	FileCounter = 0
+	DirCounter = 0
 	var MDStr string
 	flag.BoolVar(&includeDot, "dot", false, "True: Display display dotfiles. Default is false,")
+	flag.BoolVar(&Stats, "stats", false, "True: Append Stats to output")
 	flag.StringVar(&OutputFile, "o", "", "Output to given file")
 	flag.StringVar(&AppendFile, "A", "", "Append to given file")
 	flag.StringVar(&Dir, "d", "", "run in specified directory")
@@ -49,29 +44,43 @@ func main() {
 	if Dir == "" {
 		Dir = "."
 	}
-	gitignore, _ := gitignore.NewGitIgnore(IgnoreFile)
-	err := filepath.Walk(Dir,
+	Gitignore, err := gitignore.NewGitIgnore(IgnoreFile)
+	if err != nil {
+		fmt.Println("Not using any gitignore")
+	}
+	if err == nil {
+		_, err = ioutil.ReadFile(IgnoreFile)
+		if err != nil {
+			fmt.Println("Not using any gitignore")
+		}
+	}
+
+	err = filepath.Walk(Dir,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
+			// when dotfiles are excluded
 			if !includeDot {
-				if strings.HasPrefix(path, ".") != true && !gitignore.Match(path, false) && !gitignore.Match(path, true){
-					MDStr+=MkStr(path, gitignore, false)
-/*
-	//[german_deutsch](./german_deutsch)
-	path=strings.ReplaceAll(path, "_", "\\_")
-	var Depth = strings.Count(path, "/");
-	for i :=0; i != Depth; i++ {
-		MDStr+="  "
-	}
-	fmt.Println(MkStr(path, gitignore))
-	MDStr += "  * [" + path + "](" + path + ")\n"
- */
+				if strings.HasPrefix(path, ".") != true && !Gitignore.Match(path, false) && !Gitignore.Match(path, true){
+					if Stats {
+						if info.IsDir() {
+							DirCounter++
+						} else {
+							FileCounter++
+						}
+					}
+					MDStr+=MkStr(path)
 				}
-
-			} else {
-				MDStr+=MkStr(path, gitignore, true)
+			} else { // in case when dotfiles are not excluded
+				if Stats {
+					if info.IsDir() {
+						DirCounter++
+					} else {
+						FileCounter++
+					}
+				}
+				MDStr+=MkStr(path)
 			}
 
 			return nil
@@ -79,7 +88,10 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
-
+	if Stats {
+		statstr := "Files: "+strconv.Itoa(FileCounter)+", Directories: "+strconv.Itoa(DirCounter)+"\n"
+		MDStr+=statstr
+	}
 	if OutputFile != "" {
 		err := ioutil.WriteFile(OutputFile, []byte(MDStr), 0644)
 		if err != nil {
@@ -99,4 +111,3 @@ func main() {
 		fmt.Println(MDStr)
 	}
 }
-
