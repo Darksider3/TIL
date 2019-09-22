@@ -87,4 +87,4 @@ TA::TA(int x) called
 ```
 
 As you can see, the grandparents parameterized constructor doesnt get called. Instead, the **default** constructor, __Person::Person()__
-gets called.
+gets called. So you are loosing the **second** copy of the base class! Yay!
