@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/monochromegane/go-gitignore"
+//	"github.com/monochromegane/go-gitignore"
 	"io/ioutil"
 	"log"
 	"os"
@@ -37,7 +37,7 @@ func main() {
 	var OutputFile string
 	var AppendFile string
 	var Dir string
-	var IgnoreFile string
+	//var IgnoreFile string
 	var DirCounter int
 	var FileCounter int
 	var Stats bool
@@ -52,30 +52,27 @@ func main() {
 	flag.StringVar(&OutputFile, "o", "", "Output to given file")
 	flag.StringVar(&AppendFile, "A", "", "Append to given file")
 	flag.StringVar(&Dir, "d", "", "run in specified directory")
-	flag.StringVar(&IgnoreFile, "i", "./.gitignore", "use specified gitignore")
+	//flag.StringVar(&IgnoreFile, "i", "./.gitignore", "use specified gitignore")
 	flag.Parse()
 	if Dir == "" {
 		Dir = "."
 	}
-	Gitignore, err := gitignore.NewGitIgnore(IgnoreFile)
+	/*if IgnoreFile == "" {
+    IgnoreFile = "."
+  }
+  Gitignore, err := gitignore.NewGitIgnore(IgnoreFile)
 	if err != nil {
 		fmt.Println("Not using any gitignore")
-	}
-	if err == nil {
-		_, err = ioutil.ReadFile(IgnoreFile)
-		if err != nil {
-			fmt.Println("Not using any gitignore")
-		}
-	}
+	}*/
 
-	err = filepath.Walk(Dir,
+  err := filepath.Walk(Dir,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
 			// when dotfiles are excluded
 			if !includeDot {
-				if strings.HasPrefix(path, ".") != true && !Gitignore.Match(path, info.IsDir()) {
+				if strings.HasPrefix(path, ".") != true{
 					if info.IsDir() {
 						DirCounter++
 						MDStr += MkStrEscapedStr(path, info.Name()+"/")

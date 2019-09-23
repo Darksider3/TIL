@@ -1,8 +1,10 @@
   * [LICENSE](LICENSE.md)
   * [Programming/](Programming)
     * [Cpp/](Programming/Cpp)
+      * [Diamond Problem](Programming/Cpp/Diamond\_Problem.md)
       * [cxxtest](Programming/Cpp/cxxtest.md)
       * [std sort](Programming/Cpp/std\_sort.md)
+      * [virtual inhiterance](Programming/Cpp/virtual\_inhiterance.md)
     * [Python3/](Programming/Python3)
       * [Python3 NotImplementedError](Programming/Python3/Python3\_NotImplementedError.md)
       * [Python 3 Call a class like a function](Programming/Python3/Python\_3\_Call\_a\_class\_like\_a\_function.md)
@@ -19,6 +21,7 @@
     * [Windows SP1 Fresh Install Update Search forever](Windows/Windows\_SP1\_Fresh\_Install\_Update\_Search\_forever.md)
     * [batch disable command printing](Windows/batch\_disable\_command\_printing.md)
     * [batch start is confusing](Windows/batch\_start\_is\_confusing.md)
+  * [ config.yml](\_config.yml)
   * [dirList.go](dirList.go)
   * [directoryList](directoryList.md)
   * [german deutsch/](german\_deutsch)
@@ -35,8 +38,3 @@
     * [openwrt/](linux/openwrt)
       * [openwrtchangelostrootpw](linux/openwrt/openwrtchangelostrootpw.md)
     * [rsync progressbar backup compress transmission](linux/rsync\_progressbar\_backup\_compress\_transmission.md)
-
-
-Files: 28, Directories: 9
-
-
