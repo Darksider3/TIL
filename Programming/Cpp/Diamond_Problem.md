@@ -1,7 +1,7 @@
 # The Diamond Problem
 
 The Diamond problem occurs where you have multiple superclasses that come from the same base, that you need
-to build your latest child class. For example, when you've got `Base` which is the base for `BaseChild1`, and
+to build your latest child class. For example, when you've got the class `Base` which is the base for `BaseChild1`, and
 `BaseChild2`, and want to reference both in one more class: `LatestChild`:
 ```
 class Base{};
